@@ -24,10 +24,11 @@ repos:
           - '--args=--only=terraform_standard_module_structure'
           - '--args=--only=terraform_workspace_remote'
       
-      # - id: infracost_breakdown
-      #   args:
-      #     - --hook-config='.currency == "USD"'
-      #   verbose: true
+      - id: infracost_breakdown
+        args:
+          - --args=--path=./terraform/org
+          - --args=--terraform-var-file="variables.tf"
+        verbose: true
       
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0

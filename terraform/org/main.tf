@@ -30,30 +30,30 @@ resource "aws_organizations_organizational_unit" "environments" {
 
 # Create a new AWS account called "dev"
 resource "aws_organizations_account" "dev" {
-  name      = "dev"
-  email     = lookup(var.account_emails, "dev")
-  role_name = var.iam_account_role_name
-  parent_id = aws_organizations_organizational_unit.environments.id
-
-  depends_on = [aws_organizations_organization.audiotube]
+  name              = "dev"
+  email             = lookup(var.account_emails, "dev")
+  role_name         = var.iam_account_role_name
+  parent_id         = aws_organizations_organizational_unit.environments.id
+  close_on_deletion = true
+  depends_on        = [aws_organizations_organization.audiotube]
 }
 
 # Create a new AWS account called "test"
 resource "aws_organizations_account" "test" {
-  name      = "test"
-  email     = lookup(var.account_emails, "test")
-  role_name = var.iam_account_role_name
-  parent_id = aws_organizations_organizational_unit.environments.id
-
-  depends_on = [aws_organizations_organization.audiotube]
+  name              = "test"
+  email             = lookup(var.account_emails, "test")
+  role_name         = var.iam_account_role_name
+  parent_id         = aws_organizations_organizational_unit.environments.id
+  close_on_deletion = true
+  depends_on        = [aws_organizations_organization.audiotube]
 }
 
 # Create a new AWS account called "prod"
 resource "aws_organizations_account" "prod" {
-  name      = "prod"
-  email     = lookup(var.account_emails, "prod")
-  role_name = var.iam_account_role_name
-  parent_id = aws_organizations_organizational_unit.environments.id
-
-  depends_on = [aws_organizations_organization.audiotube]
+  name              = "prod"
+  email             = lookup(var.account_emails, "prod")
+  role_name         = var.iam_account_role_name
+  parent_id         = aws_organizations_organizational_unit.environments.id
+  close_on_deletion = true
+  depends_on        = [aws_organizations_organization.audiotube]
 }

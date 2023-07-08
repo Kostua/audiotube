@@ -14,7 +14,9 @@ terraform {
   }
 }
 
-provider "aws" {}
+provider "aws" {
+  region = "us-east-2"
+}
 resource "aws_organizations_organization" "audiotube" {
   aws_service_access_principals = [
     "cloudtrail.amazonaws.com",

@@ -3,7 +3,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.58.0"
+      version = "5.7.0"
     }
   }
   cloud {
@@ -14,6 +14,7 @@ terraform {
   }
 }
 
+provider "aws" {}
 resource "aws_organizations_organization" "audiotube" {
   aws_service_access_principals = [
     "cloudtrail.amazonaws.com",

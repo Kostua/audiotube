@@ -1,15 +1,18 @@
 variable "iam_account_role_name" {
   type        = string
-  description = "Name of the IAM role to be created in each account"
+  description = "The name of an IAM role that Organizations automatically preconfigures in the new member account. "
   default     = "Org-Admin"
 }
-
 variable "account_emails" {
-  type        = map(string)
-  description = "Map of account emails for dev, test, and prod environments"
+  type        = map(any)
+  description = "Map of workspace names to email addresses for AWS accounts"
   default = {
-    dev  = "cb-audiotube+dev@cloudsbits.com"
-    test = "cb-audiotube+test@cloudsbits.com"
-    prod = "cb-audiotube+prod@cloudsbits.com"
+    audiotube-org                    = "audiotube-org@cloudsbits.com",
+    audiotube-security-prod          = "audiotube-security-prod@cloudsbits.com",
+    audiotube-sandbox                = "audiotube-sandbox@cloudsbits.com",
+    audiotube-workloads-prod         = "audiotube-workloads-prod@cloudsbits.com",
+    audiotube-workloads-preprod      = "audiotube-workloads-preprod@cloudsbits.com",
+    audiotube-infrastructure-prod    = "audiotube-infrastructure-prod@cloudsbits.com",
+    audiotube-infrastructure-preprod = "audiotube-infrastructure-preprod@cloudsbits.com",
   }
 }

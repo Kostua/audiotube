@@ -40,10 +40,10 @@ resource "aws_organizations_policy" "deny_leave_org" {
 
 resource "aws_organizations_policy_attachment" "sandbox" {
   policy_id = aws_organizations_policy.cloudtrail_config_policy.id
-  target_id = aws_organizations_account.audiotube_sandbox.id
+  target_id = aws_organizations_organization.audiotube.roots[0].id
 }
 
 resource "aws_organizations_policy_attachment" "deny_leave_org_attachment" {
   policy_id = aws_organizations_policy.deny_leave_org.id
-  target_id = aws_organizations_account.audiotube_sandbox.id
+  target_id = aws_organizations_organization.audiotube.roots[0].id
 }

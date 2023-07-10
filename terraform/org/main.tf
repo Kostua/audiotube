@@ -20,7 +20,8 @@ resource "aws_organizations_organization" "audiotube" {
     "cloudtrail.amazonaws.com",
     "sso.amazonaws.com",
   ]
-  feature_set = "ALL"
+  feature_set          = "ALL"
+  enabled_policy_types = ["SERVICE_CONTROL_POLICY"]
 }
 
 resource "aws_organizations_organizational_unit" "security" {

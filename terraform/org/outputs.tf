@@ -1,4 +1,4 @@
-output "sandbox_output" {
+output "iam_account_role_name" {
   value       = var.iam_account_role_name
   description = "The name of an IAM role to assume in each account"
 }

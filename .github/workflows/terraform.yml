@@ -2,9 +2,25 @@ name: "Terraform-aws-org"
 
 on:
   push:
+    paths:
+      - 'audiotube-org/**'
+      - 'audiotube-security-prod/**'
+      - 'audiotube-sandbox/**'
+      - 'audiotube-workloads-prod/**'
+      - 'audiotube-workloads-preprod/**'
+      - 'audiotube-infrastructure-prod/**'
+      - 'audiotube-infrastructure-preprod/**'
     branches:
       - main
   pull_request:
+    paths:
+      - 'audiotube-org/**'
+      - 'audiotube-security-prod/**'
+      - 'audiotube-sandbox/**'
+      - 'audiotube-workloads-prod/**'
+      - 'audiotube-workloads-preprod/**'
+      - 'audiotube-infrastructure-prod/**'
+      - 'audiotube-infrastructure-preprod/**'
 
 jobs:
   terraform:
@@ -24,7 +40,6 @@ jobs:
         with:
           terraform_version: 1.4.6
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
 
       - name: Terraform Format
         id: fmt

@@ -3,24 +3,12 @@ name: "Terraform-aws-org"
 on:
   push:
     paths:
-      - 'audiotube-org/**'
-      - 'audiotube-security-prod/**'
-      - 'audiotube-sandbox/**'
-      - 'audiotube-workloads-prod/**'
-      - 'audiotube-workloads-preprod/**'
-      - 'audiotube-infrastructure-prod/**'
-      - 'audiotube-infrastructure-preprod/**'
+      - 'terraform/**'
     branches:
       - main
   pull_request:
     paths:
-      - 'audiotube-org/**'
-      - 'audiotube-security-prod/**'
-      - 'audiotube-sandbox/**'
-      - 'audiotube-workloads-prod/**'
-      - 'audiotube-workloads-preprod/**'
-      - 'audiotube-infrastructure-prod/**'
-      - 'audiotube-infrastructure-preprod/**'
+      - 'terraform/**'
 
 jobs:
   terraform:
@@ -28,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform/org
+        working-directory: terraform/**
     permissions:
       pull-requests: write
     steps:

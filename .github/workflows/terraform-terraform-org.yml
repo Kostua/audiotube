@@ -1,26 +1,11 @@
-name: "Terraform-aws-org"
+name: "Terraform-audiotube-org"
 
 on:
   push:
-    paths:
-      - 'audiotube-org/**'
-      - 'audiotube-security-prod/**'
-      - 'audiotube-sandbox/**'
-      - 'audiotube-workloads-prod/**'
-      - 'audiotube-workloads-preprod/**'
-      - 'audiotube-infrastructure-prod/**'
-      - 'audiotube-infrastructure-preprod/**'
     branches:
       - main
   pull_request:
-    paths:
-      - 'audiotube-org/**'
-      - 'audiotube-security-prod/**'
-      - 'audiotube-sandbox/**'
-      - 'audiotube-workloads-prod/**'
-      - 'audiotube-workloads-preprod/**'
-      - 'audiotube-infrastructure-prod/**'
-      - 'audiotube-infrastructure-preprod/**'
+
 
 jobs:
   terraform:

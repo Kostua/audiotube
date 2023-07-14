@@ -1,14 +1,11 @@
-name: "Terraform-aws-org"
+name: "Terraform-audiotube-org"
 
 on:
   push:
-    paths:
-      - 'terraform/**'
     branches:
       - main
   pull_request:
-    paths:
-      - 'terraform/**'
+
 
 jobs:
   terraform:
@@ -16,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform/**
+        working-directory: terraform/org
     permissions:
       pull-requests: write
     steps:

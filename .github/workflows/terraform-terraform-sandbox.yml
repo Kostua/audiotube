@@ -4,8 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'terraform/audiotube-sandbox/**'
   pull_request:
-
+    paths:
+      - 'terraform/audiotube-sandbox/**'
 
 jobs:
   terraform:

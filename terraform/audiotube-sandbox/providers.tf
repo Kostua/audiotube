@@ -1,12 +1,17 @@
-module "org" {
-  source = "../org"
-
+data "terraform_remote_state" "org" {
+  backend = "remote"
+  config = {
+    organization = "cloudsbits"
+    workspaces = {
+      name = "audiotube-org"
+    }
+  }
 }
 
 provider "aws" {
   alias = "audiotube-sandbox"
 
   assume_role {
-    role_arn = "arn:aws:iam::${module.org.audiotube_sandbox_account_id}:role/${var.iam_account_role_name}"
+    role_arn = "arn:aws:iam::${data.terraform_remote_state.org.outputs.audiotube_sandbox_account_id}:role/${data.terraform_remote_state.org.outputs.iam_account_role_name}"
   }
 }

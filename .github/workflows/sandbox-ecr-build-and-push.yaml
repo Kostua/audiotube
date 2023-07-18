@@ -26,7 +26,7 @@ jobs:
         id: set-matrix
         run: |
           # Detect the changed directories among auth, converter, gateway, and notification
-          changed_dirs=$(git diff --dirstat=files,0 HEAD~1..HEAD -- ./src/auth ./src/converter ./src/gateway ./src/notification | awk '{print $2}' | xargs -n1 basename | jq -R . | jq -cs .)
+          changed_dirs="$(git diff --dirstat=files,0 HEAD~1..HEAD -- ./src/auth ./src/converter ./src/gateway ./src/notification | awk '{print $2}' | xargs -n1 basename | jq -R . | jq -cs .)"
           echo "matrix=${changed_dirs}" >> $GITHUB_ENV
 
   AssumeRoleAndCallIdentity:

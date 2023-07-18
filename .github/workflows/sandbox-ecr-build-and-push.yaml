@@ -3,8 +3,8 @@ name: Connect to an AWS role from a GitHub repository
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    paths:
+      - '**/Dockerfile'
 
 env:
   AWS_REGION: us-east-2
@@ -16,18 +16,6 @@ permissions:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ env.matrix }}
-    steps:
-      - name: Check out repo
-        uses: actions/checkout@v2
-
-      - name: Set Matrix
-        id: set-matrix
-        run: |
-          # Detect the changed directories among auth, converter, gateway, and notification
-          changed_dirs="$(git diff --dirstat=files,0 HEAD~1..HEAD -- ./src/auth ./src/converter ./src/gateway ./src/notification | awk '{print $2}' | xargs -n1 basename | jq -R . | jq -cs .)"
-          echo "matrix=${changed_dirs}" >> $GITHUB_ENV
 
   AssumeRoleAndCallIdentity:
     runs-on: ubuntu-latest
@@ -49,16 +37,9 @@ jobs:
 
       - name: Build Docker image
         id: build
-        uses: docker/build-push-action@v4.1.1
-        with:
-          context: ./src/${{ fromJSON(env.matrix)[0].dir }}
-          push: false
-          tags: ${{ secrets.SANDBOX_AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ fromJSON(env.matrix)[0].dir }}:${{ fromJSON(env.matrix)[0].dir }}-${{ github.sha }}
-
-      - name: Push Docker image
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v4.1.1
-        with:
-          context: ./src/${{ fromJSON(env.matrix)[0].dir }}
-          push: true
-          tags: ${{ secrets.SANDBOX_AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ fromJSON(env.matrix)[0].dir }}:${{ fromJSON(env.matrix)[0].dir }}-${{ github.sha }}
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t "$ECR_REGISTRY"/my-image:"$IMAGE_TAG" .
+          docker push "$ECR_REGISTRY"/my-image:"$IMAGE_TAG"

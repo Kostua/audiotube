@@ -25,7 +25,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.SANDBOX_GITHUB_ACTION_AWS_ROLE_ARN }}
            #change to reflect your IAM role’s ARN
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          role-session-name: GithubActionsRole
           aws-region: ${{ env.AWS_REGION }}
       # Hello from AWS: WhoAmI
       - name: Sts GetCallerIdentity

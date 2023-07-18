@@ -7,7 +7,6 @@ on:
       - 'src/**/Dockerfile'
   workflow_dispatch:
 
-# Permission can be added at job level or workflow level    
 permissions:
   id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
@@ -36,7 +35,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/auth:"$IMAGE_TAG" -f src/auth/Dockerfile .
+          docker build -t "$ECR_REGISTRY"/auth:"$IMAGE_TAG" -f src/auth/Dockerfile src/auth
           docker push "$ECR_REGISTRY"/auth:"$IMAGE_TAG"
 
       - name: Build and push converter service Docker image
@@ -45,7 +44,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/converter:"$IMAGE_TAG" -f src/converter/Dockerfile .
+          docker build -t "$ECR_REGISTRY"/converter:"$IMAGE_TAG" -f src/converter/Dockerfile src/converter
           docker push "$ECR_REGISTRY"/converter:"$IMAGE_TAG"
         
       - name: Build and push gateway service Docker image
@@ -54,7 +53,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/gateway:"$IMAGE_TAG" -f src/gateway/Dockerfile .
+          docker build -t "$ECR_REGISTRY"/gateway:"$IMAGE_TAG" -f src/gateway/Dockerfile src/gateway
           docker push "$ECR_REGISTRY"/gateway:"$IMAGE_TAG"
         
       - name: Build and push notification service Docker image
@@ -63,5 +62,5 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/notification:"$IMAGE_TAG" -f src/notification/Dockerfile .
+          docker build -t "$ECR_REGISTRY"/notification:"$IMAGE_TAG" -f src/notification/Dockerfile src/notification
           docker push "$ECR_REGISTRY"/notification:"$IMAGE_TAG"

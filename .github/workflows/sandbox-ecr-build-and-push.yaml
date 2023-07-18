@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '**/Dockerfile'
+      - 'src/**/Dockerfile'
   workflow_dispatch:
 
 # Permission can be added at job level or workflow level    
@@ -24,17 +24,44 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.SANDBOX_AWS_ACCOUNT_ID }}:role/GithubActionsRole
           role-session-name: GithubActionsRole
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Docker image
-        id: build
+      - name: Build and push auth service Docker image
+        id: build-auth
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/my-image:"$IMAGE_TAG" .
-          docker push "$ECR_REGISTRY"/my-image:"$IMAGE_TAG"
+          docker build -t "$ECR_REGISTRY"/auth:"$IMAGE_TAG" -f src/auth/Dockerfile .
+          docker push "$ECR_REGISTRY"/auth:"$IMAGE_TAG"
+
+      - name: Build and push converter service Docker image
+        id: build-converter
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t "$ECR_REGISTRY"/converter:"$IMAGE_TAG" -f src/converter/Dockerfile .
+          docker push "$ECR_REGISTRY"/converter:"$IMAGE_TAG"
+        
+      - name: Build and push gateway service Docker image
+        id: build-gateway
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t "$ECR_REGISTRY"/gateway:"$IMAGE_TAG" -f src/gateway/Dockerfile .
+          docker push "$ECR_REGISTRY"/gateway:"$IMAGE_TAG"
+        
+      - name: Build and push notification service Docker image
+        id: build-notification
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t "$ECR_REGISTRY"/notification:"$IMAGE_TAG" -f src/notification/Dockerfile .
+          docker push "$ECR_REGISTRY"/notification:"$IMAGE_TAG"

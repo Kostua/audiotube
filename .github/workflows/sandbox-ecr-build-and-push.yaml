@@ -1,4 +1,4 @@
-name: Connect to an AWS role from a GitHub repository
+name: sandbox Docker Image push to ECR
 
 on:
   push:
@@ -28,6 +28,11 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Print ECR Registry
+        run: echo $ECR_REGISTRY
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
 
       - name: Build and push auth service Docker image
         id: build-auth

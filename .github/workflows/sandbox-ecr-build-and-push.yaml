@@ -35,8 +35,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/auth:"$IMAGE_TAG" -f src/auth/Dockerfile src/auth
-          docker push "$ECR_REGISTRY"/auth:"$IMAGE_TAG"
+          docker build -t "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:auth-"$IMAGE_TAG" -f src/auth/Dockerfile src/auth
+          docker push "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:auth-"$IMAGE_TAG"
 
       - name: Build and push converter service Docker image
         id: build-converter
@@ -44,8 +44,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/converter:"$IMAGE_TAG" -f src/converter/Dockerfile src/converter
-          docker push "$ECR_REGISTRY"/converter:"$IMAGE_TAG"
+          docker build -t "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:converter-"$IMAGE_TAG" -f src/converter/Dockerfile src/converter
+          docker push "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:converter-"$IMAGE_TAG"
         
       - name: Build and push gateway service Docker image
         id: build-gateway
@@ -53,8 +53,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/gateway:"$IMAGE_TAG" -f src/gateway/Dockerfile src/gateway
-          docker push "$ECR_REGISTRY"/gateway:"$IMAGE_TAG"
+          docker build -t "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:gateway-"$IMAGE_TAG" -f src/gateway/Dockerfile src/gateway
+          docker push "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:gateway-"$IMAGE_TAG"
         
       - name: Build and push notification service Docker image
         id: build-notification
@@ -62,5 +62,5 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "$ECR_REGISTRY"/notification:"$IMAGE_TAG" -f src/notification/Dockerfile src/notification
-          docker push "$ECR_REGISTRY"/notification:"$IMAGE_TAG"
+          docker build -t "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:notification-"$IMAGE_TAG" -f src/notification/Dockerfile src/notification
+          docker push "$ECR_REGISTRY"/cloudsbits-audiotube-sandbox:notification-"$IMAGE_TAG"

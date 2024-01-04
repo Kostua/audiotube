@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.0
+        uses: aws-actions/configure-aws-credentials@v4.0.1
         with:
           role-to-assume: arn:aws:iam::${{ secrets.SANDBOX_AWS_ACCOUNT_ID }}:role/GithubActionsRole
           role-session-name: GithubActionsRole
@@ -27,7 +27,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build and push auth service Docker image
         id: build-auth
